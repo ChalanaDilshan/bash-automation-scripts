@@ -1,5 +1,5 @@
 ---
-name: "Bug Report"
+name: Bug Report
 about: Report a script error or unexpected behavior.
 title: "[BUG] - "
 labels: bug
