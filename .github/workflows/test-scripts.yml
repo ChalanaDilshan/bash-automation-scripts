@@ -1,0 +1,31 @@
+name: Test Bash Scripts
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run ShellCheck
+        uses: koalaman/shellcheck-github-action@v2
+        with:
+
+          path: "."
+          pattern: "*.sh"
+
+      - name: Basic Syntax Check
+        run: |
+          for script in *.sh; do
+            if [ -f "$script" ]; then
+              bash -n "$script" && echo "$script syntax is OK"
+            fi
+          done
