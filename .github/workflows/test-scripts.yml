@@ -11,21 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      
+     
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Run ShellCheck
-        uses: koalaman/shellcheck-github-action@v2
+        uses: ludeeus/action-shellcheck@master
         with:
-
-          path: "."
-          pattern: "*.sh"
+          scandir: '.'
 
       - name: Basic Syntax Check
         run: |
-          for script in *.sh; do
-            if [ -f "$script" ]; then
-              bash -n "$script" && echo "$script syntax is OK"
-            fi
+          find . -name "*.sh" -type f | while read -r script; do
+            echo "Checking syntax for: $script"
+            bash -n "$script" || exit 1
           done
+          echo "All scripts passed syntax check! "
